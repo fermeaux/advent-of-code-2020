@@ -29,7 +29,8 @@
     "aoc22": "node ./src/aoc-22.js",
     "aoc23": "node ./src/aoc-23.js",
     "aoc24": "node ./src/aoc-24.js",
-    "aoc25": "node ./src/aoc-25.js"
+    "aoc25": "node ./src/aoc-25.js",
+    "new": "sh ./scripts/new.sh"
   },
   "author": "",
   "license": "ISC",
