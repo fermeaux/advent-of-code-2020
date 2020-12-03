@@ -10,3 +10,4 @@ For creating a new file from the template you can run `npm run new -- XX`, where
 
 day 01 : Global : 2246 / SFEIR : 2. There was an outage, the day was cancelled.
 day 02 : Global : 1859 / SFEIR : 1.
+day 03 : Global : 3543 / SFEIR : 2.
