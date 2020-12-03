@@ -6,7 +6,7 @@ function solution2(input) {
     return ''
 }
 
-const input = ''
+const input = ``
 
 const value1 = solution1(input)
 const value2 = solution2(input)
