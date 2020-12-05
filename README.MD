@@ -8,7 +8,8 @@ For creating a new file from the template you can run `npm run new -- XX`, where
 
 ## History
 
-- Day 01 : Global : 2246 / SFEIR : 2. There was an outage, the day was cancelled.
-- Day 02 : Global : 1859 / SFEIR : 1.
-- Day 03 : Global : 3543 / SFEIR : 3.
-- Day 04 : Global : 1670 / SFEIR : 2.
+- Day 01 : Global : 2246 / SFEIR : 2 / Time : 00:15:59. There was an outage, the day was cancelled.
+- Day 02 : Global : 1859 / SFEIR : 1 / Time : 00:14:01.
+- Day 03 : Global : 3543 / SFEIR : 3 / Time : 00:22:33.
+- Day 04 : Global : 1670 / SFEIR : 2 / Time : 00:33:52.
+- Day 05 : Global : 6294 / SFEIR : 8 / Time : 00:50:55.
