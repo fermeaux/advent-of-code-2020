@@ -1,3 +1,17 @@
+function solution1Alt(input) {
+    const entries = input.split('\n\n')
+    let count = 0
+    entries.forEach(entry => {
+        const questions = entry.split('\n').join('')
+        const answer = {}
+        for (let i = 0; i < questions.length; i++) {
+            answer[questions[i]] = true
+        }
+        count += Object.keys(answer).length
+    })
+    return count
+}
+
 function solution1(input) {
     const entries = input.split('\n\n')
     const answers = {}
@@ -15,6 +29,23 @@ function solution1(input) {
     return Object.keys(answers).reduce((prev, current) => {
         return prev + answers[current]
     }, 0)
+}
+
+function solution2Alt(input) {
+    const entries = input.split('\n\n')
+    let count = 0
+    entries.forEach(entry => {
+        const questions = entry.split('\n')
+        const answer = {}
+        questions.forEach(question => {
+            for (let i = 0; i < question.length; i++) {
+                if (!answer[question[i]]) answer[question[i]] = 0
+                answer[question[i]]++
+            }
+        })
+        count += Object.keys(answer).reduce((prev, current) => answer[current] === questions.length ? prev + 1 : prev, 0)
+    })
+    return count
 }
 
 function solution2(input) {
@@ -2235,7 +2266,11 @@ pvuafthmr
 dvpmwcyg`
 
 const value1 = solution1(input)
+const value1Alt = solution1Alt(input)
 const value2 = solution2(input)
+const value2Alt = solution2Alt(input)
 
 console.log(value1)
+console.log(value1Alt)
 console.log(value2)
+console.log(value2Alt)
