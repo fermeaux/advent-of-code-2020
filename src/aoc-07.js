@@ -32,29 +32,18 @@ function solution1(input) {
 }
 
 function solution2(input) {
-    const entries = input.split('\n')
-    const bags = {}
-    entries.forEach(entry => {
-        let splitTmp = entry.split(' bags contain ')
-        const index = splitTmp[0]
-        if (!bags[index]) bags[index] = []
-        if (splitTmp[1] !== 'no other bags.') {
-            splitTmp = splitTmp[1].split(', ')
-            splitTmp.forEach(tmp => {
-                const splitedBag = tmp.split(' ')
-                bags[index].push({ amount: parseInt(splitedBag[0]), name: splitedBag[1] + ' ' + splitedBag[2]})
-            })
-        }
+    [...input.matchAll(/(?<amount>\d+)? ?(?<name>\w+ \w+) bag/gm)]
+    .map(tmp => tmp.groups)
+    .forEach(({amount, name}) => {
+        if (!amount && name !== 'no other') this.lastBagName = name
+        if (!amount && name !== 'no other') this[this.lastBagName] = []
+        if (amount) this[this.lastBagName].push({ amount: +amount, name })
     })
-    return getCount('shiny gold', bags) - 1
+    const count = (name) => this[name].reduce((p, c) => p + c.amount * count(c.name), 1)
+    return count('shiny gold') - 1
 }
 
-function getCount(name, bags) {
-    const count = bags[name].reduce((prev, current) => {
-        return prev + current.amount * getCount(current.name, bags)
-    }, 1)
-    return count
-}
+console.log('        if (amount) this[this.lastBagName].push({ amount: +amount, name })'.length)
 
 const input = `dark olive bags contain 2 muted brown bags, 1 mirrored tomato bag, 4 bright black bags.
 faded coral bags contain 3 drab cyan bags, 1 light aqua bag.
