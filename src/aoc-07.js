@@ -43,8 +43,6 @@ function solution2(input) {
     return count('shiny gold') - 1
 }
 
-console.log('        if (amount) this[this.lastBagName].push({ amount: +amount, name })'.length)
-
 const input = `dark olive bags contain 2 muted brown bags, 1 mirrored tomato bag, 4 bright black bags.
 faded coral bags contain 3 drab cyan bags, 1 light aqua bag.
 plaid plum bags contain 2 mirrored cyan bags.
