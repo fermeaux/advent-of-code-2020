@@ -2,8 +2,8 @@ function solution1(input) {
     const entries = input.split('\n')
     const instructions = []
     entries.forEach((entry) => {
-        const groups = [...[...entry.matchAll(/(?<command>.{3}) (?<amount>.+)/)].map(tmp => tmp.groups)][0]
-        instructions.push({command: groups.command, amount: parseInt(groups.amount)})
+        const { command, amount } = /(?<command>.{3}) (?<amount>.+)/.exec(entry).groups
+        instructions.push({command, amount: +amount})
     })
     let acc = 0
     let i = 0
@@ -47,8 +47,8 @@ function solution2(input) {
     const entries = input.split('\n')
     const instructions = []
     entries.forEach((entry) => {
-        const groups = [...[...entry.matchAll(/(?<command>.{3}) (?<amount>.+)/)].map(tmp => tmp.groups)][0]
-        instructions.push({command: groups.command, amount: parseInt(groups.amount)})
+        const { command, amount } = /(?<command>.{3}) (?<amount>.+)/.exec(entry).groups
+        instructions.push({command, amount: +amount})
     })
     return createContexts(instructions)
 }
