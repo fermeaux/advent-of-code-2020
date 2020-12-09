@@ -16,3 +16,4 @@ For creating a new file from the template you can run `npm run new -- XX`, where
 - Day 06 : Global : 5574 / SFEIR : 4 / Time : 00:30:13.
 - Day 07 : Global : 4120 / SFEIR : 4 / Time : 01:13:29.
 - Day 08 : Global : 4026 / SFEIR : 3 / Time : 00:36:55.
+- Day 09 : Global : 5543 / SFEIR : 5 / Time : 00:39:47.
