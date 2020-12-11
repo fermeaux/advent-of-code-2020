@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement AoC 2020</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav id="actions">
+        <label for="options">Filtre :</label>
+        <select id="options" onChange="changeTarget(this)"></select>
+    </nav>
+    <canvas id="myChart" width="400" height="180"></canvas>
+    <script lang="js">
+        const requestUrl = 'https://adventofcode.com/2020/leaderboard/private/view/202047.json'
+        const data = JSON.parse(localStorage.getItem('datas'))
+        const today = new Date().getDate()
+        Object.values(data.members).forEach(member => {
+            for (let i = 1; i <= today; i++) {
+                if (!member.completion_day_level) member.completion_day_level = {}
+                if (!member.completion_day_level[i]) member.completion_day_level[i] = {}
+                if (!member.completion_day_level[i][1]) member.completion_day_level[i][1] = { get_star_ts: -1 }
+                if (!member.completion_day_level[i][2]) member.completion_day_level[i][2] = { get_star_ts: -1 }
+            }
+        })
+        const minStars = today
+        const members = Object.values(data.members).filter(member => member.stars > minStars).sort((a, b) => b.local_score - a.local_score)
+        const nbMembers = Object.keys(data.members).length
+        members.forEach((member, id) => data.members[member.id].color = `hsl(${Math.round((id * 360) / (nbMembers - 1))}, 33%, 50%)`)
+        let chart
+
+        const optionsElement = document.getElementById('options')
+        const optionElement = document.createElement('option')
+        optionElement.setAttribute('value', `Total`)
+        optionElement.innerHTML = `Total`
+        optionsElement.appendChild(optionElement)
+        for (let i = today; i > 0; i--) {
+            for (let exo = 2; exo > 0; exo--) {
+                const optionElement = document.createElement('option')
+                optionElement.setAttribute('value', `Jour ${i} / Exo ${exo}`)
+                optionElement.innerHTML = `Jour ${i} / Exo ${exo}`
+                optionsElement.appendChild(optionElement)
+            }
+        }
+
+        setChart(members)
+
+        function changeTarget(obj) {
+            const groups = /Jour (?<day>\d+) \/ Exo (?<exo>\d+)/.exec(obj.value)?.groups
+            if (!groups) updateChart(members)
+            else updateChart(sortByDayAndExo(+groups.day, data, +groups.exo))
+        }
+
+        function sortByDayAndExo(day, data, exo = 2) {
+            return Object.values(data.members).filter(member => +member.completion_day_level[day][exo].get_star_ts > 0).sort((a, b) => {
+                const ats = +a.completion_day_level[day][exo].get_star_ts
+                const bts = +b.completion_day_level[day][exo].get_star_ts
+                return ats - bts
+            })
+        }
+
+        function updateChart(members) {
+            chart.data.labels = members.map((member, id) => `${id + 1}. ${member.name}`)
+            chart.data.datasets = [{
+                label: 'Score',
+                data: members.map(member => member.local_score),
+                backgroundColor: members.map(member => member.color),
+                borderColor: members.map(member => member.color),
+                borderWidth: 1
+            }]
+            chart.update();
+        }
+
+        function setChart(members) {
+            const ctx = document.getElementById('myChart').getContext('2d')
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: members.map((member, id) => `${id + 1}. ${member.name}`),
+                    datasets: [{
+                        label: 'Score',
+                        data: members.map(member => member.local_score),
+                        backgroundColor: members.map(member => member.color),
+                        borderColor: members.map(member => member.color),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                fontSize: 18,
+                                stepSize: 100,
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                fontSize: 14,
+                                stepSize: 1,
+                                beginAtZero: true
+                            }
+                        }]
+                    }, animation: {
+                        easing: "easeInOutBack"
+                    }, legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 18
+                        }
+                    }
+                }
+            })
+        }
+        console.log(data)
+    </script>
+</body>
+<style>
+    body {
+        background: #0F2027;
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    }
+
+    nav {
+        padding: 2rem 4rem;
+    }
+
+    label {
+        color: white
+    }
+</style>
+
+</html>

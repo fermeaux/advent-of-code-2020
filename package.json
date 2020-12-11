@@ -4,6 +4,7 @@
   "description": "",
   "main": "aoc-01.js",
   "scripts": {
+    "start": "npx servor",
     "test": "echo \"Error: no test specified\" && exit 1",
     "aoc01": "node ./src/aoc-01.js",
     "aoc02": "node ./src/aoc-02.js",
