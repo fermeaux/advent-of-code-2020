@@ -10,29 +10,26 @@ function solution1(input) {
     return one * three
 }
 
-let memoized = {}
-
-function constructRoutes(items, last = 0) {
-    if (items.length === 0) return 1
-    let count = 0
-    for (let i = 0; i < 3; i++) {
-        if (items[i] - last <= 3) {
-            if (!memoized[items[i]]) {
-                const possibilities = items.filter((_, index) => index > i)
-                const constructedCount = constructRoutes(possibilities, items[i])
-                memoized[items[i]] = constructedCount
-            }
-            count += memoized[items[i]]
-        }
-    }
-    return count
-}
-
 function solution2(input) {
-    memoized = {}
     const joults = input.split('\n').map(entry => +entry)
     joults.sort((a, b) => a - b)
-    return constructRoutes(joults)
+    const memoized = {}
+    const countRoutes = (remaining, last = 0) => {
+        if (remaining.length === 0) return 1
+        let count = 0
+        for (let i = 0; i < 3; i++) {
+            const joult = remaining[i]
+            if (joult - last <= 3) {
+                if (!memoized[joult]) {
+                    const possibilities = remaining.filter((_, index) => index > i)
+                    memoized[joult] = countRoutes(possibilities, joult)
+                }
+                count += memoized[joult]
+            }
+        }
+        return count
+    }
+    return countRoutes(joults)
 }
 
 const testInput = `28
