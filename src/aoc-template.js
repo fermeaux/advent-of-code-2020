@@ -17,6 +17,7 @@ function solution2(input) {
 const testInput = [``]
 const input = ``
 
+console.log(`\n\n`)
 if (canTest) {
     testInput.forEach((t, index) => {
         console.log(`===== Test Output ${index + 1} =====`)
