@@ -57,15 +57,22 @@
         }
 
         function sortByDayAndExo(day, data, exo = 2) {
-            return Object.values(data.members).filter(member => +member.completion_day_level[day][exo].get_star_ts > 0).sort((a, b) => {
-                const ats = +a.completion_day_level[day][exo].get_star_ts
-                const bts = +b.completion_day_level[day][exo].get_star_ts
-                return ats - bts
-            })
+            const members = Object.values(data.members)
+                .filter(member => +member.completion_day_level[day][exo].get_star_ts > 0)
+                .sort((a, b) => {
+                    const ats = +a.completion_day_level[day][exo].get_star_ts
+                    const bts = +b.completion_day_level[day][exo].get_star_ts
+                    return ats - bts
+                }).map((member) => ({
+                    ...member,
+                    ts: new Date(+member.completion_day_level[day][exo].get_star_ts * 1000)
+                }))
+            console.log(members)
+            return members
         }
 
         function updateChart(members) {
-            chart.data.labels = members.map((member, id) => `${id + 1}. ${member.name}`)
+            chart.data.labels = members.map((member, id) => `${id + 1}. ${member.name} / ${member.ts.getHours()}:${member.ts.getMinutes()}:${member.ts.getSeconds()}`)
             chart.data.datasets = [{
                 label: 'Score',
                 data: members.map(member => member.local_score),
