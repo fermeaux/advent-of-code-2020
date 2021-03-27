@@ -23,10 +23,6 @@ function solution2(input) {
     const entries = input.split('\n')
     let bestList = [];
     entries.forEach(entry => {
-        let currentRow = 0
-        let currentColumn = 0
-        let stepRow = 128
-        let stepColumn = 1024
         for (let i = 0; i < entry.length; i++) {
             stepRow /= 2
             stepColumn /= 2
