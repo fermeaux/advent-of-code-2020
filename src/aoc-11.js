@@ -6,7 +6,6 @@ function solution1(input) {
         const lineSeatable = []
         for (let i = 0; i < entry.length; i++) {
             line.push(false)
-            lineSeatable.push(entry[i] === 'L')
         }
         cells.push(line)
         seatable.push(lineSeatable)
